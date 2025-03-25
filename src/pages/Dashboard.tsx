@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -27,10 +26,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 
 const mockRequests = [
-  { id: 'REQ001', customer: 'Acme Inc.', item: 'Circuit Board', priority: 'high', status: 'registered', date: '2023-06-15', currentStep: 'item_registered' as ProcessStep },
-  { id: 'REQ002', customer: 'TechCorp', item: 'Power Supply', priority: 'medium', status: 'testing', date: '2023-06-18', currentStep: 'testing_assigned' as ProcessStep },
-  { id: 'REQ003', customer: 'InnoSys', item: 'Sensor Array', priority: 'low', status: 'completed', date: '2023-06-20', currentStep: 'testing_completed' as ProcessStep },
-  { id: 'REQ004', customer: 'DataTech', item: 'Memory Module', priority: 'high', status: 'reviewed', date: '2023-06-22', currentStep: 'customer_review' as ProcessStep },
+  { id: 'REQ001', customer: 'PowerTech Industries', item: 'Battery Cell - UL1642', priority: 'high', status: 'registered', date: '2023-06-15', currentStep: 'item_registered' as ProcessStep },
+  { id: 'REQ002', customer: 'MobilePower Corp', item: 'Power Bank - UL2056', priority: 'medium', status: 'testing', date: '2023-06-18', currentStep: 'testing_assigned' as ProcessStep },
+  { id: 'REQ003', customer: 'InnoSys Electronics', item: 'Battery Pack - UN38.3', priority: 'low', status: 'completed', date: '2023-06-20', currentStep: 'testing_completed' as ProcessStep },
+  { id: 'REQ004', customer: 'EnergyCell Ltd', item: 'Battery Charger - IEC62368', priority: 'high', status: 'reviewed', date: '2023-06-22', currentStep: 'customer_review' as ProcessStep },
 ];
 
 const statusColors: Record<string, string> = {

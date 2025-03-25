@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -25,36 +26,36 @@ const mockAssignments: (TestItem & {
     id: 'ITEM001', 
     requestId: 'REQ001', 
     barcode: 'BC00123', 
-    name: 'Circuit Board', 
-    description: 'Power supply circuit board', 
+    name: 'Battery Cell - UL1642', 
+    description: 'Lithium battery cell safety testing', 
     assignedTesterId: 'tester-1',
     priority: 'high',
     status: 'pending',
-    customerName: 'Acme Inc.',
+    customerName: 'PowerTech Industries',
     dueDate: '2023-07-15'
   },
   { 
     id: 'ITEM002', 
     requestId: 'REQ002', 
     barcode: 'BC00124', 
-    name: 'Power Supply', 
-    description: '24V DC power supply', 
+    name: 'Power Bank - UL2056', 
+    description: 'Power bank safety evaluation', 
     assignedTesterId: 'tester-1',
     priority: 'medium',
     status: 'in_progress',
-    customerName: 'TechCorp',
+    customerName: 'MobilePower Corp',
     dueDate: '2023-07-18'
   },
   { 
     id: 'ITEM003', 
     requestId: 'REQ003', 
     barcode: 'BC00125', 
-    name: 'Sensor Array', 
-    description: 'Temperature and humidity sensor array', 
+    name: 'Battery Pack - UN38.3', 
+    description: 'Transport safety testing for lithium batteries', 
     assignedTesterId: 'tester-1',
     priority: 'low',
     status: 'completed',
-    customerName: 'InnoSys',
+    customerName: 'InnoSys Electronics',
     dueDate: '2023-07-10'
   },
 ];
