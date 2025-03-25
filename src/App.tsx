@@ -14,6 +14,8 @@ import TestResults from "./pages/TestResults";
 import Assignments from "./pages/Assignments";
 import Quotes from "./pages/Quotes";
 import QuoteDetail from "./pages/QuoteDetail";
+import QuoteNew from "./pages/QuoteNew";
+import CustomerRequest from "./pages/CustomerRequest";
 import { useState } from "react";
 
 // Protected route component
@@ -101,10 +103,26 @@ const AppRoutes = () => {
         } 
       />
       <Route 
+        path="/quotes/new" 
+        element={
+          <RoleProtectedRoute allowedRoles={['sales']}>
+            <QuoteNew />
+          </RoleProtectedRoute>
+        } 
+      />
+      <Route 
         path="/quotes/:id" 
         element={
           <RoleProtectedRoute allowedRoles={['sales', 'customer']}>
             <QuoteDetail />
+          </RoleProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/request/new" 
+        element={
+          <RoleProtectedRoute allowedRoles={['customer']}>
+            <CustomerRequest />
           </RoleProtectedRoute>
         } 
       />

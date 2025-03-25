@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,8 @@ import {
   Clock,
   FileText,
   Package,
+  Plus,
+  Send,
   User,
   Users,
 } from 'lucide-react';
@@ -121,17 +124,31 @@ const Dashboard = () => {
               </div>
               
               {role === 'sales' && (
-                <Button onClick={() => toast.success('New request created')} className="mt-4 sm:mt-0">
-                  New Request
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-2 mt-4 sm:mt-0">
+                  <Button onClick={() => navigate('/quotes/new')}>
+                    <Plus className="mr-2 h-4 w-4" /> 
+                    Create Quote
+                  </Button>
+                  <Button variant="outline" onClick={() => toast.success('New request created')}>
+                    <ClipboardList className="mr-2 h-4 w-4" />
+                    New Request
+                  </Button>
+                </div>
               )}
               {role === 'reception' && (
                 <RegisterItemDialog />
               )}
               {role === 'customer' && (
-                <Button onClick={() => toast.success('New request created')} className="mt-4 sm:mt-0">
-                  Submit Request
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-2 mt-4 sm:mt-0">
+                  <Button onClick={() => navigate('/request/new')}>
+                    <Send className="mr-2 h-4 w-4" />
+                    Submit Request
+                  </Button>
+                  <Button variant="outline" onClick={() => navigate('/quotes')}>
+                    <FileText className="mr-2 h-4 w-4" />
+                    View Quotes
+                  </Button>
+                </div>
               )}
             </div>
             
