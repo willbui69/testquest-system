@@ -103,9 +103,15 @@ const Dashboard = () => {
   const handleAction = (action: string, requestId: string) => {
     if (action === 'test' && role === 'tester') {
       navigate(`/test-data-entry/${requestId}`);
+    } else if (action === 'view' || action === 'process' || action === 'approve' || action === 'download') {
+      navigate(`/results/${requestId}`);
     } else {
       toast.success(`Action ${action} performed on request ${requestId}`);
     }
+  };
+
+  const handleRowClick = (requestId: string) => {
+    navigate(`/results/${requestId}`);
   };
 
   return (
@@ -195,7 +201,11 @@ const Dashboard = () => {
                           </thead>
                           <tbody>
                             {filteredRequests.map((request) => (
-                              <tr key={request.id} className="border-t hover:bg-muted/50 transition-colors">
+                              <tr 
+                                key={request.id} 
+                                className="border-t hover:bg-muted/50 transition-colors cursor-pointer" 
+                                onClick={() => handleRowClick(request.id)}
+                              >
                                 <td className="px-4 py-3 font-medium">{request.id}</td>
                                 <td className="px-4 py-3">{request.customer}</td>
                                 <td className="px-4 py-3">{request.item}</td>
@@ -210,7 +220,7 @@ const Dashboard = () => {
                                   </span>
                                 </td>
                                 <td className="px-4 py-3">{request.date}</td>
-                                <td className="px-4 py-3 text-right">
+                                <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
                                   {role === 'sales' && (
                                     <Button variant="ghost" size="sm" onClick={() => handleAction('view', request.id)}>
                                       View

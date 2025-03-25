@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -89,9 +88,9 @@ const AppRoutes = () => {
       <Route 
         path="/results/:requestId" 
         element={
-          <RoleProtectedRoute allowedRoles={['tester']}>
+          <ProtectedRoute>
             <TestResults />
-          </RoleProtectedRoute>
+          </ProtectedRoute>
         } 
       />
       <Route 
