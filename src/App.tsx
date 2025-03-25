@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import TestDataEntry from "./pages/TestDataEntry";
+import Assignments from "./pages/Assignments";
 import { useState } from "react";
 
 // Protected route component
@@ -62,6 +63,14 @@ const AppRoutes = () => {
           <ProtectedRoute>
             <Dashboard />
           </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/assignments" 
+        element={
+          <RoleProtectedRoute allowedRoles={['tester']}>
+            <Assignments />
+          </RoleProtectedRoute>
         } 
       />
       <Route 
