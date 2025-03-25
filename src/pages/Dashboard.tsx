@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 import DashboardCard from '@/components/ui/DashboardCard';
@@ -49,6 +49,7 @@ const priorityColors: Record<string, string> = {
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   
   const role = currentUser?.role || 'customer';
@@ -100,7 +101,12 @@ const Dashboard = () => {
   });
 
   const handleAction = (action: string, requestId: string) => {
-    toast.success(`Action ${action} performed on request ${requestId}`);
+    if (action === 'test' && role === 'tester') {
+      // Navigate to the test data entry page
+      navigate(`/test-data-entry/${requestId}`);
+    } else {
+      toast.success(`Action ${action} performed on request ${requestId}`);
+    }
   };
 
   return (
@@ -148,14 +154,13 @@ const Dashboard = () => {
                   value={stat.value}
                   icon={stat.icon}
                   trend={stat.trend}
-                  className="animate-fade-up"
-                  style={{ animationDelay: `${i * 100}ms` }}
+                  className={`animate-fade-up delay-${i * 100}`}
                 />
               ))}
             </div>
             
             {/* Main Content Tabs */}
-            <Tabs defaultValue="requests" className="w-full animate-fade-up" style={{ animationDelay: '400ms' }}>
+            <Tabs defaultValue="requests" className="w-full animate-fade-up">
               <TabsList className="grid w-full max-w-md grid-cols-3">
                 <TabsTrigger value="requests">Requests</TabsTrigger>
                 <TabsTrigger value="process">Process Flow</TabsTrigger>

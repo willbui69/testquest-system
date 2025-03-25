@@ -59,3 +59,11 @@ export type ProcessStep =
   | 'customer_review'
   | 'manager_approval'
   | 'report_finalized';
+
+export interface ExtractedPdfData {
+  testId?: string;
+  resultValues?: Record<string, string | number>;
+  summary?: string;
+  timestamp?: string;
+  equipment?: string[];
+}

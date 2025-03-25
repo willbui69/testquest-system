@@ -8,6 +8,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import TestDataEntry from "./pages/TestDataEntry";
 
 // Protected route component
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -24,6 +25,31 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   return children;
 };
 
+// Role-protected route component
+const RoleProtectedRoute = ({ 
+  children, 
+  allowedRoles 
+}: { 
+  children: JSX.Element;
+  allowedRoles: string[];
+}) => {
+  const { currentUser, loading } = useAuth();
+  
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
+  
+  if (!currentUser) {
+    return <Navigate to="/" replace />;
+  }
+  
+  if (!allowedRoles.includes(currentUser.role)) {
+    return <Navigate to="/dashboard" replace />;
+  }
+  
+  return children;
+};
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -34,6 +60,14 @@ const AppRoutes = () => {
           <ProtectedRoute>
             <Dashboard />
           </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/test-data-entry/:requestId" 
+        element={
+          <RoleProtectedRoute allowedRoles={['tester']}>
+            <TestDataEntry />
+          </RoleProtectedRoute>
         } 
       />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
