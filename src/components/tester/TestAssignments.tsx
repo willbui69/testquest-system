@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -70,8 +69,7 @@ export function TestAssignments() {
   
   // View test results for a completed test
   const handleViewResults = (requestId: string) => {
-    // In a real app, this would navigate to a results page
-    console.log(`View results for ${requestId}`);
+    navigate(`/results/${requestId}`);
   };
   
   return (

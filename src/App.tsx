@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import TestDataEntry from "./pages/TestDataEntry";
+import TestResults from "./pages/TestResults";
 import Assignments from "./pages/Assignments";
 import { useState } from "react";
 
@@ -78,6 +79,14 @@ const AppRoutes = () => {
         element={
           <RoleProtectedRoute allowedRoles={['tester']}>
             <TestDataEntry />
+          </RoleProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/results/:requestId" 
+        element={
+          <RoleProtectedRoute allowedRoles={['tester']}>
+            <TestResults />
           </RoleProtectedRoute>
         } 
       />
