@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { ArrowLeft, FileText, Send, Beaker } from 'lucide-react';
+import { addRequest } from '@/services/requestService';
 
 // List of safety and compliance tests available
 const availableTests = [
@@ -86,13 +86,29 @@ export default function CustomerRequest() {
       return;
     }
     
-    // In a real app, we'd send this data to a server
-    console.log('Submitting test request:', formData);
+    // Create the test request
+    const request = {
+      customerId: currentUser?.id || 'unknown',
+      customerName: currentUser?.name || 'Unknown Customer',
+      itemName: formData.itemName,
+      itemDescription: formData.itemDescription,
+      quantity: parseInt(formData.quantity) || 1,
+      priority: formData.priority,
+    };
     
-    toast.success('Your test request has been submitted successfully!');
-    
-    // Redirect to dashboard
-    navigate('/dashboard');
+    // Save the request using our service
+    try {
+      const savedRequest = addRequest(request);
+      console.log('Submitted test request:', savedRequest);
+      
+      toast.success('Your test request has been submitted successfully!');
+      
+      // Redirect to dashboard
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Error submitting request:', error);
+      toast.error('There was an error submitting your request. Please try again.');
+    }
   };
   
   return (
@@ -504,3 +520,4 @@ export default function CustomerRequest() {
     </div>
   );
 }
+

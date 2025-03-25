@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -24,13 +24,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-
-const mockRequests = [
-  { id: 'REQ001', customer: 'PowerTech Industries', item: 'Battery Cell - UL1642', priority: 'high', status: 'registered', date: '2023-06-15', currentStep: 'item_registered' as ProcessStep },
-  { id: 'REQ002', customer: 'MobilePower Corp', item: 'Power Bank - UL2056', priority: 'medium', status: 'testing', date: '2023-06-18', currentStep: 'testing_assigned' as ProcessStep },
-  { id: 'REQ003', customer: 'InnoSys Electronics', item: 'Battery Pack - UN38.3', priority: 'low', status: 'completed', date: '2023-06-20', currentStep: 'testing_completed' as ProcessStep },
-  { id: 'REQ004', customer: 'EnergyCell Ltd', item: 'Battery Charger - IEC62368', priority: 'high', status: 'reviewed', date: '2023-06-22', currentStep: 'customer_review' as ProcessStep },
-];
+import { getAllRequests, mapRequestToDashboardFormat } from '@/services/requestService';
 
 const statusColors: Record<string, string> = {
   pending: 'bg-amber-100 text-amber-800',
@@ -52,8 +46,15 @@ const Dashboard = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [requests, setRequests] = useState<any[]>([]);
   
   const role = currentUser?.role || 'customer';
+
+  useEffect(() => {
+    const testRequests = getAllRequests();
+    const mappedRequests = testRequests.map(mapRequestToDashboardFormat);
+    setRequests(mappedRequests);
+  }, [role]);
 
   const stats = {
     sales: [
@@ -88,7 +89,7 @@ const Dashboard = () => {
     ],
   };
 
-  const filteredRequests = mockRequests.filter(request => {
+  const filteredRequests = requests.filter(request => {
     if (role === 'sales' || role === 'reception' || role === 'manager') {
       return true;
     } else if (role === 'tester') {
@@ -238,6 +239,13 @@ const Dashboard = () => {
                                 </td>
                               </tr>
                             ))}
+                            {filteredRequests.length === 0 && (
+                              <tr>
+                                <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
+                                  No test requests found
+                                </td>
+                              </tr>
+                            )}
                           </tbody>
                         </table>
                       </div>

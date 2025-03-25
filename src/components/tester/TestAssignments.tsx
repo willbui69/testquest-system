@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Table, 
@@ -13,55 +13,36 @@ import { Button } from '@/components/ui/button';
 import { ClipboardList, FileText } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { TestItem } from '@/types';
+import { getAllRequests } from '@/services/requestService';
 
-// Mock data - would come from API in a real application
-const mockAssignments: (TestItem & { 
-  requestId: string;
-  priority: 'low' | 'medium' | 'high';
-  status: 'pending' | 'in_progress' | 'completed';
-  customerName: string;
-  dueDate: string;
-})[] = [
-  { 
-    id: 'ITEM001', 
-    requestId: 'REQ001', 
-    barcode: 'BC00123', 
-    name: 'Battery Cell - UL1642', 
-    description: 'Lithium battery cell safety testing', 
-    assignedTesterId: 'tester-1',
-    priority: 'high',
-    status: 'pending',
-    customerName: 'PowerTech Industries',
-    dueDate: '2023-07-15'
-  },
-  { 
-    id: 'ITEM002', 
-    requestId: 'REQ002', 
-    barcode: 'BC00124', 
-    name: 'Power Bank - UL2056', 
-    description: 'Power bank safety evaluation', 
-    assignedTesterId: 'tester-1',
-    priority: 'medium',
-    status: 'in_progress',
-    customerName: 'MobilePower Corp',
-    dueDate: '2023-07-18'
-  },
-  { 
-    id: 'ITEM003', 
-    requestId: 'REQ003', 
-    barcode: 'BC00125', 
-    name: 'Battery Pack - UN38.3', 
-    description: 'Transport safety testing for lithium batteries', 
-    assignedTesterId: 'tester-1',
-    priority: 'low',
-    status: 'completed',
-    customerName: 'InnoSys Electronics',
-    dueDate: '2023-07-10'
-  },
-];
+// Helper function to convert test requests to test assignments
+const mapRequestsToAssignments = (requests: any[]) => {
+  return requests
+    .filter(req => req.status === 'registered' || req.status === 'testing')
+    .map(req => ({
+      id: `ITEM${req.id.substring(3)}`,
+      requestId: req.id,
+      barcode: `BC${req.id.substring(3)}`,
+      name: req.itemName,
+      description: req.itemDescription || 'No description available',
+      assignedTesterId: 'tester-1',
+      priority: req.priority || 'medium',
+      status: req.status === 'registered' ? 'pending' : 'in_progress',
+      customerName: req.customerName,
+      dueDate: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0] // Due date is 7 days from now
+    }));
+};
 
 export function TestAssignments() {
   const navigate = useNavigate();
+  const [assignments, setAssignments] = useState<any[]>([]);
+  
+  // Load assignments on component mount
+  useEffect(() => {
+    const requests = getAllRequests();
+    const mappedAssignments = mapRequestsToAssignments(requests);
+    setAssignments(mappedAssignments);
+  }, []);
   
   // Start test for an assignment
   const handleStartTest = (requestId: string) => {
@@ -87,7 +68,7 @@ export function TestAssignments() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {mockAssignments.map((assignment) => (
+          {assignments.map((assignment) => (
             <TableRow key={assignment.id}>
               <TableCell className="font-medium">
                 <div>
@@ -126,7 +107,7 @@ export function TestAssignments() {
             </TableRow>
           ))}
           
-          {mockAssignments.length === 0 && (
+          {assignments.length === 0 && (
             <TableRow>
               <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
                 No assignments found
