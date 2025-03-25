@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Calendar, User, Clipboard, FileSparkles } from 'lucide-react';
+import { FileText, Calendar, User, Clipboard, Sparkles } from 'lucide-react';
 
 interface TestResultViewProps {
   testResult: {
@@ -68,7 +68,10 @@ export default function TestResultsView({ testResult }: TestResultViewProps) {
       {/* Results Card */}
       <Card>
         <CardHeader>
-          <CardTitle>Test Results</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-yellow-500" /> 
+            Test Results
+          </CardTitle>
           <CardDescription>Detailed measurements and observations</CardDescription>
         </CardHeader>
         <CardContent>

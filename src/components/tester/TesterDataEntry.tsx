@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import PdfUploader from './PdfUploader';
 import { ExtractedPdfData } from '@/types';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { FileText, Save, Upload } from 'lucide-react';
+import { FileText, Save, Upload, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface TesterDataEntryProps {
@@ -38,23 +38,39 @@ export default function TesterDataEntry({ requestId, onSave }: TesterDataEntryPr
   const applyExtractedData = () => {
     if (!extractedData) return;
     
-    // Convert extracted values to a string format for the results textarea
+    // Convert extracted values to a more formatted string
     const resultsText = Object.entries(extractedData.resultValues || {})
       .map(([key, value]) => `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`)
       .join('\n');
     
-    // Add equipment list if available
+    // Add equipment list if available with header
     const equipmentText = extractedData.equipment?.length
       ? '\n\nEquipment Used:\n' + extractedData.equipment.join('\n')
       : '';
     
-    // Add summary if available
-    const summaryText = extractedData.summary
-      ? '\n\nSummary:\n' + extractedData.summary
+    // Add technician if available
+    const technicianText = extractedData.technician
+      ? '\n\nTechnician: ' + extractedData.technician
       : '';
     
+    // Add standards if available
+    const standardsText = extractedData.referencedStandards?.length
+      ? '\n\nReference Standards:\n' + extractedData.referencedStandards.join('\n')
+      : '';
+      
+    // Add analysis status if available
+    const statusText = extractedData.analysisStatus
+      ? '\n\nStatus: ' + extractedData.analysisStatus
+      : '';
+    
+    // Add timestamp in a more readable format
+    const date = extractedData.timestamp 
+      ? new Date(extractedData.timestamp).toLocaleString()
+      : new Date().toLocaleString();
+    const timestampText = '\n\nTest Date: ' + date;
+    
     // Combine all text
-    const fullResultsText = resultsText + equipmentText + summaryText;
+    const fullResultsText = resultsText + equipmentText + technicianText + standardsText + statusText + timestampText;
     
     setFormData({
       testId: extractedData.testId || formData.testId,
@@ -83,6 +99,7 @@ export default function TesterDataEntry({ requestId, onSave }: TesterDataEntryPr
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
+      {/* First card - Test Results Form */}
       <Card>
         <CardHeader>
           <CardTitle>Test Results</CardTitle>
@@ -179,6 +196,36 @@ export default function TesterDataEntry({ requestId, onSave }: TesterDataEntryPr
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
+              </div>
+            )}
+            
+            {extractedData?.technician && (
+              <div>
+                <h4 className="text-sm font-medium">Technician</h4>
+                <p className="text-sm mt-1">{extractedData.technician}</p>
+              </div>
+            )}
+            
+            {extractedData?.referencedStandards && extractedData.referencedStandards.length > 0 && (
+              <div>
+                <h4 className="text-sm font-medium">Reference Standards</h4>
+                <ul className="list-disc list-inside text-sm mt-1">
+                  {extractedData.referencedStandards.map((standard, index) => (
+                    <li key={index}>{standard}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {extractedData?.analysisStatus && (
+              <div>
+                <h4 className="text-sm font-medium">Status</h4>
+                <div className="mt-1">
+                  <span className="inline-flex items-center text-sm rounded-full px-2.5 py-0.5 font-medium bg-green-100 text-green-800">
+                    <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> 
+                    {extractedData.analysisStatus}
+                  </span>
+                </div>
               </div>
             )}
             

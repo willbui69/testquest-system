@@ -1,4 +1,3 @@
-
 export type UserRole = 'sales' | 'reception' | 'tester' | 'manager' | 'customer';
 
 export interface User {
@@ -66,4 +65,7 @@ export interface ExtractedPdfData {
   summary?: string;
   timestamp?: string;
   equipment?: string[];
+  technician?: string;
+  referencedStandards?: string[];
+  analysisStatus?: string;
 }
