@@ -35,7 +35,26 @@ export default function CustomerRequest() {
     brandName: '',
     modelNumber: '',
     certification: '',
-    additionalNotes: ''
+    additionalNotes: '',
+    // Technical specifications for the table format
+    sampleNo: '',
+    // Main EUT
+    voltage: '',
+    powerMain: '',
+    cpu: '',
+    gpu: '',
+    // Power supply unit #1
+    input1: '',
+    output1: '',
+    power1: '',
+    // Power supply unit #2
+    input2: '',
+    output2: '',
+    power2: '',
+    // Power supply unit #3
+    input3: '',
+    output3: '',
+    power3: '',
   });
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -93,57 +112,35 @@ export default function CustomerRequest() {
         </p>
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Beaker className="h-5 w-5 text-primary" />
-              Test Information
+              Basic Information
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="testType">Test Type</Label>
-              <Select 
-                value={formData.testType} 
-                onValueChange={(value) => handleSelectChange('testType', value)}
-              >
-                <SelectTrigger id="testType">
-                  <SelectValue placeholder="Select test type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableTests.map(test => (
-                    <SelectItem key={test.id} value={test.id}>
-                      {test.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="itemName">Item Name</Label>
-              <Input
-                id="itemName"
-                value={formData.itemName}
-                onChange={handleChange}
-                placeholder="Name of the item to be tested"
-                required
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="itemDescription">Description</Label>
-              <Textarea
-                id="itemDescription"
-                value={formData.itemDescription}
-                onChange={handleChange}
-                placeholder="Detailed description of the item"
-                rows={3}
-              />
-            </div>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="testType">Test Type</Label>
+                <Select 
+                  value={formData.testType} 
+                  onValueChange={(value) => handleSelectChange('testType', value)}
+                >
+                  <SelectTrigger id="testType">
+                    <SelectValue placeholder="Select test type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableTests.map(test => (
+                      <SelectItem key={test.id} value={test.id}>
+                        {test.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              
               <div className="space-y-2">
                 <Label htmlFor="quantity">Quantity</Label>
                 <Input
@@ -171,16 +168,7 @@ export default function CustomerRequest() {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader>
-            <CardTitle>Product Information</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
               <div className="space-y-2">
                 <Label htmlFor="placeOfOrigin">Place of Origin</Label>
                 <Input
@@ -210,16 +198,276 @@ export default function CustomerRequest() {
                   placeholder="e.g., BP-2000, BC-X15"
                 />
               </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="certification">Required Certification</Label>
-                <Input
-                  id="certification"
-                  value={formData.certification}
-                  onChange={handleChange}
-                  placeholder="e.g., CE, FCC, RoHS"
-                />
-              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader>
+            <CardTitle>Technical Specifications</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-muted">
+                    <th className="border p-2 w-16 text-center">No.</th>
+                    <th className="border p-2 w-1/2 text-left">SPECIFICATIONS</th>
+                    <th className="border p-2 w-1/2 text-left">VALUES</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Sample No. 1 */}
+                  <tr>
+                    <td className="border p-2 text-center" rowSpan={10}>1</td>
+                    <td className="border p-2 font-medium">Sample No.</td>
+                    <td className="border p-2">
+                      <Input
+                        id="sampleNo"
+                        value={formData.sampleNo}
+                        onChange={handleChange}
+                        placeholder="Enter sample number"
+                      />
+                    </td>
+                  </tr>
+                  
+                  {/* Main EUT */}
+                  <tr>
+                    <td className="border p-2 font-medium bg-gray-50" colSpan={2}>
+                      Main EUT
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Voltage
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="voltage"
+                        value={formData.voltage}
+                        onChange={handleChange}
+                        placeholder="e.g., 110-240V"
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Power
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="powerMain"
+                        value={formData.powerMain}
+                        onChange={handleChange}
+                        placeholder="e.g., 45W"
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> CPU
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="cpu"
+                        value={formData.cpu}
+                        onChange={handleChange}
+                        placeholder="e.g., Intel i5-1135G7"
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Graphics card (GPU)
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="gpu"
+                        value={formData.gpu}
+                        onChange={handleChange}
+                        placeholder="e.g., Intel Iris Xe"
+                      />
+                    </td>
+                  </tr>
+                  
+                  {/* Power supply unit #1 */}
+                  <tr>
+                    <td className="border p-2 font-medium bg-gray-50" colSpan={2}>
+                      Power supply unit #1
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Input
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="input1"
+                        value={formData.input1}
+                        onChange={handleChange}
+                        placeholder="e.g., 100-240V AC"
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Output
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="output1"
+                        value={formData.output1}
+                        onChange={handleChange}
+                        placeholder="e.g., 19.5V DC, 2.31A"
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Power
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="power1"
+                        value={formData.power1}
+                        onChange={handleChange}
+                        placeholder="e.g., 45W"
+                      />
+                    </td>
+                  </tr>
+                  
+                  {/* Sample No. 2 */}
+                  <tr>
+                    <td className="border p-2 text-center" rowSpan={4}>2</td>
+                    <td className="border p-2 font-medium">Sample No.</td>
+                    <td className="border p-2">
+                      <Input
+                        id="sampleNo2"
+                        placeholder="Enter sample number"
+                        disabled
+                      />
+                    </td>
+                  </tr>
+                  
+                  {/* Power supply unit #2 */}
+                  <tr>
+                    <td className="border p-2 font-medium bg-gray-50" colSpan={2}>
+                      Power supply unit #2
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Input
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="input2"
+                        value={formData.input2}
+                        onChange={handleChange}
+                        placeholder="e.g., 100-240V AC"
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Output
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="output2"
+                        value={formData.output2}
+                        onChange={handleChange}
+                        placeholder="e.g., 19.5V DC, 2.31A"
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Power
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="power2"
+                        value={formData.power2}
+                        onChange={handleChange}
+                        placeholder="e.g., 45W"
+                      />
+                    </td>
+                  </tr>
+                  
+                  {/* Sample No. 3 */}
+                  <tr>
+                    <td className="border p-2 text-center" rowSpan={4}>3</td>
+                    <td className="border p-2 font-medium">Sample No.</td>
+                    <td className="border p-2">
+                      <Input
+                        id="sampleNo3"
+                        placeholder="Enter sample number"
+                        disabled
+                      />
+                    </td>
+                  </tr>
+                  
+                  {/* Power supply unit #3 */}
+                  <tr>
+                    <td className="border p-2 font-medium bg-gray-50" colSpan={2}>
+                      Power supply unit #3
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Input
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="input3"
+                        value={formData.input3}
+                        onChange={handleChange}
+                        placeholder="e.g., 100-240V AC"
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Output
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="output3"
+                        value={formData.output3}
+                        onChange={handleChange}
+                        placeholder="e.g., 19.5V DC, 2.31A"
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border p-2 pl-6">
+                      <span className="mr-2">-</span> Power
+                    </td>
+                    <td className="border p-2">
+                      <Input
+                        id="power3"
+                        value={formData.power3}
+                        onChange={handleChange}
+                        placeholder="e.g., 45W"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </CardContent>
         </Card>
