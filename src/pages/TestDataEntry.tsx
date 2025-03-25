@@ -12,9 +12,33 @@ import { toast } from 'sonner';
 
 // Mock data - would come from API in a real application
 const mockTestRequests = [
-  { id: 'REQ001', customer: 'Acme Inc.', item: 'Circuit Board', priority: 'high', status: 'testing' },
-  { id: 'REQ002', customer: 'TechCorp', item: 'Power Supply', priority: 'medium', status: 'testing' },
-  { id: 'REQ003', customer: 'InnoSys', item: 'Sensor Array', priority: 'low', status: 'testing' },
+  { 
+    id: 'REQ001', 
+    customer: 'PowerTech Industries', 
+    item: 'Battery Cell - UL1642', 
+    modelNumber: 'PC-L18650',
+    brandName: 'PowerCell',
+    priority: 'high', 
+    status: 'testing' 
+  },
+  { 
+    id: 'REQ002', 
+    customer: 'MobilePower Corp', 
+    item: 'Power Bank - UL2056', 
+    modelNumber: 'TC-10000',
+    brandName: 'TravelCharge',
+    priority: 'medium', 
+    status: 'testing' 
+  },
+  { 
+    id: 'REQ003', 
+    customer: 'InnoSys Electronics', 
+    item: 'Battery Pack - UN38.3', 
+    modelNumber: 'ES-LP5200',
+    brandName: 'EnergySafe',
+    priority: 'low', 
+    status: 'testing' 
+  },
 ];
 
 export default function TestDataEntry() {
@@ -83,8 +107,8 @@ export default function TestDataEntry() {
                       <p className="text-lg">{testRequest.id}</p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Item</p>
-                      <p className="text-lg">{testRequest.item}</p>
+                      <p className="text-sm font-medium">Customer</p>
+                      <p className="text-lg">{testRequest.customer}</p>
                     </div>
                     <div>
                       <p className="text-sm font-medium">Priority</p>
@@ -95,6 +119,18 @@ export default function TestDataEntry() {
                       >
                         {testRequest.priority}
                       </div>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Item</p>
+                      <p className="text-lg">{testRequest.item}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Model Number</p>
+                      <p className="text-lg">{testRequest.modelNumber}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Brand</p>
+                      <p className="text-lg">{testRequest.brandName}</p>
                     </div>
                   </div>
                 </CardContent>

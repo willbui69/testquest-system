@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Calendar, User, Clipboard, Sparkles } from 'lucide-react';
+import { FileText, Calendar, User, Clipboard, Sparkles, MapPin, Briefcase, Certificate, Tag } from 'lucide-react';
 
 interface TestResultViewProps {
   testResult: {
@@ -9,6 +9,10 @@ interface TestResultViewProps {
     testId: string;
     item: string;
     customer: string;
+    placeOfOrigin?: string;
+    brandName?: string;
+    modelNumber?: string;
+    certification?: string;
     testDate: string;
     results: string;
     notes: string;
@@ -42,6 +46,16 @@ export default function TestResultsView({ testResult }: TestResultViewProps) {
                   <p className="text-lg">{testResult.item}</p>
                 </div>
               </div>
+              
+              {testResult.modelNumber && (
+                <div className="flex items-start gap-2">
+                  <Tag className="h-5 w-5 mt-0.5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Model Number</p>
+                    <p className="text-lg">{testResult.modelNumber}</p>
+                  </div>
+                </div>
+              )}
             </div>
             
             <div className="space-y-4">
@@ -60,8 +74,43 @@ export default function TestResultsView({ testResult }: TestResultViewProps) {
                   <p className="text-lg">{testResult.testDate}</p>
                 </div>
               </div>
+              
+              {testResult.certification && (
+                <div className="flex items-start gap-2">
+                  <Certificate className="h-5 w-5 mt-0.5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Certification</p>
+                    <p className="text-lg">{testResult.certification}</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+          
+          {/* Additional product information */}
+          {(testResult.placeOfOrigin || testResult.brandName) && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 pt-6 border-t">
+              {testResult.brandName && (
+                <div className="flex items-start gap-2">
+                  <Briefcase className="h-5 w-5 mt-0.5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Brand Name</p>
+                    <p className="text-lg">{testResult.brandName}</p>
+                  </div>
+                </div>
+              )}
+              
+              {testResult.placeOfOrigin && (
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-5 w-5 mt-0.5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Place of Origin</p>
+                    <p className="text-lg">{testResult.placeOfOrigin}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
       
