@@ -1,4 +1,3 @@
-
 export type UserRole = 'sales' | 'reception' | 'tester' | 'manager' | 'customer';
 
 export interface User {
@@ -8,6 +7,16 @@ export interface User {
   role: UserRole;
   avatar?: string;
 }
+
+export type ProcessStep = 
+  | 'request_received' 
+  | 'item_registered' 
+  | 'testing_assigned'
+  | 'testing_completed'
+  | 'results_compiled'
+  | 'customer_review'
+  | 'manager_approval'
+  | 'report_finalized';
 
 export interface TestRequest {
   id: string;
@@ -20,6 +29,7 @@ export interface TestRequest {
   status: 'pending' | 'registered' | 'testing' | 'completed' | 'reviewed' | 'approved' | 'finalized';
   createdAt: Date;
   updatedAt: Date;
+  currentStep: ProcessStep;
 }
 
 export interface TestItem {
@@ -50,16 +60,6 @@ export interface Report {
   signedDocumentUrl?: string;
 }
 
-export type ProcessStep = 
-  | 'request_received' 
-  | 'item_registered' 
-  | 'testing_assigned'
-  | 'testing_completed'
-  | 'results_compiled'
-  | 'customer_review'
-  | 'manager_approval'
-  | 'report_finalized';
-
 export interface ExtractedPdfData {
   testId?: string;
   resultValues?: Record<string, string | number>;
@@ -71,7 +71,6 @@ export interface ExtractedPdfData {
   analysisStatus?: string;
 }
 
-// Product Quote Types
 export type QuoteStatus = 'draft' | 'sent' | 'viewed' | 'accepted' | 'rejected' | 'expired';
 
 export interface QuoteItem {
