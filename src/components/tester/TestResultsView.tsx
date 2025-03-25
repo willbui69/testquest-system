@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Calendar, User, Clipboard, Sparkles, MapPin, Briefcase, Certificate, Tag } from 'lucide-react';
+import { FileText, Calendar, User, Clipboard, Sparkles, MapPin, Briefcase, Award, Tag } from 'lucide-react';
 
 interface TestResultViewProps {
   testResult: {
@@ -77,7 +77,7 @@ export default function TestResultsView({ testResult }: TestResultViewProps) {
               
               {testResult.certification && (
                 <div className="flex items-start gap-2">
-                  <Certificate className="h-5 w-5 mt-0.5 text-muted-foreground" />
+                  <Award className="h-5 w-5 mt-0.5 text-muted-foreground" />
                   <div>
                     <p className="text-sm font-medium">Certification</p>
                     <p className="text-lg">{testResult.certification}</p>
