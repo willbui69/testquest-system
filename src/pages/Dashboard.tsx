@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 import DashboardCard from '@/components/ui/DashboardCard';
 import ProcessFlow from '@/components/ui/ProcessFlow';
+import RegisterItemDialog from '@/components/reception/RegisterItemDialog';
 import { ProcessStep } from '@/types';
 import {
   BarChart3,
@@ -22,7 +23,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 
-// Mock data for the dashboard
 const mockRequests = [
   { id: 'REQ001', customer: 'Acme Inc.', item: 'Circuit Board', priority: 'high', status: 'registered', date: '2023-06-15', currentStep: 'item_registered' as ProcessStep },
   { id: 'REQ002', customer: 'TechCorp', item: 'Power Supply', priority: 'medium', status: 'testing', date: '2023-06-18', currentStep: 'testing_assigned' as ProcessStep },
@@ -30,7 +30,6 @@ const mockRequests = [
   { id: 'REQ004', customer: 'DataTech', item: 'Memory Module', priority: 'high', status: 'reviewed', date: '2023-06-22', currentStep: 'customer_review' as ProcessStep },
 ];
 
-// Status color mapping
 const statusColors: Record<string, string> = {
   pending: 'bg-amber-100 text-amber-800',
   registered: 'bg-blue-100 text-blue-800',
@@ -54,7 +53,6 @@ const Dashboard = () => {
   
   const role = currentUser?.role || 'customer';
 
-  // Different stats for different roles
   const stats = {
     sales: [
       { title: 'New Requests', value: '24', icon: <ClipboardList size={20} />, trend: { value: 12, direction: 'up' } },
@@ -88,21 +86,19 @@ const Dashboard = () => {
     ],
   };
 
-  // Filter requests based on role
   const filteredRequests = mockRequests.filter(request => {
     if (role === 'sales' || role === 'reception' || role === 'manager') {
-      return true; // See all requests
+      return true;
     } else if (role === 'tester') {
-      return request.status === 'testing'; // Only see testing items
+      return request.status === 'testing';
     } else if (role === 'customer') {
-      return true; // In a real app, filter by customer ID
+      return true;
     }
     return false;
   });
 
   const handleAction = (action: string, requestId: string) => {
     if (action === 'test' && role === 'tester') {
-      // Navigate to the test data entry page
       navigate(`/test-data-entry/${requestId}`);
     } else {
       toast.success(`Action ${action} performed on request ${requestId}`);
@@ -111,32 +107,26 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen bg-background">
-      {/* Sidebar */}
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       
-      {/* Main Content */}
       <div className="flex-1 flex flex-col md:ml-64 transition-all duration-300 ease-in-out">
         <Header toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
         
         <main className="flex-1 overflow-y-auto p-4 md:p-6 animate-fade-in">
           <div className="space-y-6">
-            {/* Welcome Section */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h1 className="text-3xl font-bold tracking-tight">Welcome back, {currentUser?.name}</h1>
                 <p className="text-muted-foreground">Here's what's happening with your test requests today.</p>
               </div>
               
-              {/* Role-specific action button */}
               {role === 'sales' && (
                 <Button onClick={() => toast.success('New request created')} className="mt-4 sm:mt-0">
                   New Request
                 </Button>
               )}
               {role === 'reception' && (
-                <Button onClick={() => toast.success('Item registration form opened')} className="mt-4 sm:mt-0">
-                  Register Item
-                </Button>
+                <RegisterItemDialog />
               )}
               {role === 'customer' && (
                 <Button onClick={() => toast.success('New request created')} className="mt-4 sm:mt-0">
@@ -145,7 +135,6 @@ const Dashboard = () => {
               )}
             </div>
             
-            {/* Stats Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {stats[role]?.map((stat, i) => (
                 <DashboardCard 
@@ -159,7 +148,6 @@ const Dashboard = () => {
               ))}
             </div>
             
-            {/* Main Content Tabs */}
             <Tabs defaultValue="requests" className="w-full animate-fade-up">
               <TabsList className="grid w-full max-w-md grid-cols-3">
                 <TabsTrigger value="requests">Requests</TabsTrigger>
