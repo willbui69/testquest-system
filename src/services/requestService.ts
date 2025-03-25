@@ -1,3 +1,4 @@
+
 import { TestRequest, ProcessStep } from '@/types';
 
 // Use localStorage to persist test requests between sessions
@@ -26,7 +27,7 @@ initializeStorage();
 const parseRequestDates = (request: any): TestRequest => {
   return {
     ...request,
-    // Keep dates as strings since we're storing in localStorage
+    // Store dates as strings for localStorage compatibility
     createdAt: request.createdAt,
     updatedAt: request.updatedAt,
   };

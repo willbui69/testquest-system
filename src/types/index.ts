@@ -1,3 +1,4 @@
+
 export type UserRole = 'sales' | 'reception' | 'tester' | 'manager' | 'customer';
 
 export interface User {
@@ -27,8 +28,8 @@ export interface TestRequest {
   quantity: number;
   priority: 'low' | 'medium' | 'high';
   status: 'pending' | 'registered' | 'testing' | 'completed' | 'reviewed' | 'approved' | 'finalized';
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   currentStep: ProcessStep;
 }
 
