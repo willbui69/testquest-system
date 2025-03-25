@@ -12,6 +12,8 @@ import NotFound from "./pages/NotFound";
 import TestDataEntry from "./pages/TestDataEntry";
 import TestResults from "./pages/TestResults";
 import Assignments from "./pages/Assignments";
+import Quotes from "./pages/Quotes";
+import QuoteDetail from "./pages/QuoteDetail";
 import { useState } from "react";
 
 // Protected route component
@@ -87,6 +89,22 @@ const AppRoutes = () => {
         element={
           <RoleProtectedRoute allowedRoles={['tester']}>
             <TestResults />
+          </RoleProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/quotes" 
+        element={
+          <RoleProtectedRoute allowedRoles={['sales', 'customer']}>
+            <Quotes />
+          </RoleProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/quotes/:id" 
+        element={
+          <RoleProtectedRoute allowedRoles={['sales', 'customer']}>
+            <QuoteDetail />
           </RoleProtectedRoute>
         } 
       />

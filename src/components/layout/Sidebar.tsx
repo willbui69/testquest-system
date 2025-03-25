@@ -14,7 +14,8 @@ import {
   Package, 
   Settings, 
   UserCircle, 
-  Users
+  Users,
+  DollarSign
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -31,6 +32,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     sales: [
       { name: 'Dashboard', icon: <Home size={18} />, path: '/dashboard' },
       { name: 'Customers', icon: <Users size={18} />, path: '/customers' },
+      { name: 'Quotes', icon: <DollarSign size={18} />, path: '/quotes' },
       { name: 'Requests', icon: <ClipboardList size={18} />, path: '/requests' },
       { name: 'Messages', icon: <MessagesSquare size={18} />, path: '/messages' },
     ],
@@ -54,6 +56,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     customer: [
       { name: 'Dashboard', icon: <Home size={18} />, path: '/dashboard' },
       { name: 'My Requests', icon: <ClipboardList size={18} />, path: '/requests' },
+      { name: 'Quotes', icon: <DollarSign size={18} />, path: '/quotes' },
       { name: 'Download Reports', icon: <Download size={18} />, path: '/reports' },
       { name: 'Messages', icon: <MessagesSquare size={18} />, path: '/messages' },
     ],

@@ -1,3 +1,4 @@
+
 export type UserRole = 'sales' | 'reception' | 'tester' | 'manager' | 'customer';
 
 export interface User {
@@ -68,4 +69,35 @@ export interface ExtractedPdfData {
   technician?: string;
   referencedStandards?: string[];
   analysisStatus?: string;
+}
+
+// Product Quote Types
+export type QuoteStatus = 'draft' | 'sent' | 'viewed' | 'accepted' | 'rejected' | 'expired';
+
+export interface QuoteItem {
+  id: string;
+  name: string;
+  description: string;
+  unitPrice: number;
+  quantity: number;
+  discount?: number;
+  total: number;
+}
+
+export interface ProductQuote {
+  id: string;
+  customerId: string;
+  customerName: string;
+  customerEmail: string;
+  items: QuoteItem[];
+  subtotal: number;
+  discountTotal?: number;
+  tax?: number;
+  total: number;
+  status: QuoteStatus;
+  notes?: string;
+  validUntil: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy: string;
 }
